@@ -369,7 +369,7 @@ def newton_raphson(x0,constants,e1,step,eqs,deriv,maxiter=1000):
     delta1 = dx(x0,eqs)
     n=1
     results1 = pd.DataFrame([[x0,delta1,step]]) 
-    results = results.append(results1, ignore_index=True)
+    results = pd.concat([results, results1], ignore_index=True)
     
     while delta1 > e1:
         f_ = eqs(x0,constants)
@@ -381,7 +381,7 @@ def newton_raphson(x0,constants,e1,step,eqs,deriv,maxiter=1000):
         #    x0 = x0 - step*(f_/df_)
         delta1 = dx(x0,eqs)      
         results1 = pd.DataFrame([[x0,delta1,step,f_,df_,f_/df_]])
-        results = results.append(results1, ignore_index=True)        
+        results = pd.concat([results, results1], ignore_index=True)  
         if n > 10:
             results.to_csv('results_nr.csv', index=False, header=False) 
     return x0    
@@ -516,7 +516,7 @@ def iso_evo(t_step_Myr,end_time_Myr,nr_step,nr_tol,DM_mass_f,DM_mass_f_sil,DM_ST
                          "fraction of f_crust_returned that is remolised","S2 to SO2","plutons from mantle melting","sulfate sequestration","deep mantle - fraction of mantle melting","mass silicate mantle"]])
     results2 = pd.DataFrame([[rate_f["pd"],rate_f["pi"],rate_f["ei"],rate_f["ed"],rate_f["ac"],rate_f["rc"], 
                         rate_f["ec"],resurf_cm_yr,sil_mag_S, thick_C,f_remobilised,f_S2,f_pl2mo,f_sq,f_deep,M_mass]])
-    results = results.append(results2, ignore_index=True)
+    results = pd.concat([results, results2], ignore_index=True)
     results2 = pd.DataFrame([["time step","time (Myr)","[S] mantle",
                          "d34S M","d34S F","d34S SS","d34S S","d34S DM","d34S og","d34S iS",
                          "d33S M","d33S F","d33S SS", "d33S S","d33S DM","d33S og","d33S iS",
@@ -533,7 +533,7 @@ def iso_evo(t_step_Myr,end_time_Myr,nr_step,nr_tol,DM_mass_f,DM_mass_f_sil,DM_ST
                          "R36 M", "R36 F", "R36 SS","R36 S","R36 DM","R36 og","R36 iS",
                          "a33_bu", "a34_bu", "a36_bu",
                          "a33_escape-burial", "a34_escape-burial", "a36_escape-burial"]])
-    results = results.append(results2, ignore_index=True)
+    results = pd.concat([results, results2], ignore_index=True)
     results2 = pd.DataFrame([[n,t_s,S_conc_M,
                          M_34d,F_34d,SS_34d,S_34d,DM_34d,"","",
                          M_33d,F_33d,SS_33d,S_33d,DM_33d,"","",
@@ -550,7 +550,7 @@ def iso_evo(t_step_Myr,end_time_Myr,nr_step,nr_tol,DM_mass_f,DM_mass_f_sil,DM_ST
                          M_34R, F_34R, SS_34R, S_34R, DM_36R,"","",
                          M_36R, F_36R, SS_36R, S_36R, DM_36R,"","",
                          "","","","","","","","",""]])         
-    results = results.append(results2, ignore_index=True)
+    results = pd.concat([results, results2], ignore_index=True)
     results.to_csv('time_evolution.csv', index=False, header=False)
 
     for n in range(1,end,1): 
@@ -771,7 +771,7 @@ def iso_evo(t_step_Myr,end_time_Myr,nr_step,nr_tol,DM_mass_f,DM_mass_f_sil,DM_ST
                          M_34R, F_34R, SS_34R, S_34R,DM_34R,ao_34R,iS_34R,
                          M_36R, F_36R, SS_36R, S_36R,DM_36R,ao_36R,iS_36R,
                          a33_bu,a34_bu,a36_bu,a33_eb,a34_eb,a36_eb]]) 
-        results = results.append(results2, ignore_index=True)
+        results = pd.concat([results, results2], ignore_index=True)
         if(n % 1000==0):
             results.to_csv('time_evolution.csv', index=False, header=False)
         if(n==(end-1.)):
@@ -832,7 +832,7 @@ def iso_evo_simple(t_step_Myr,end_time_Myr,nr_step,nr_tol,DM_mass_f,DM_mass_f_si
                          "fraction of f_crust_returned that is remolised","S2 to SO2","plutons from mantle melting","sulfate sequestration","deep mantle - fraction of mantle melting","mass silicate mantle"]])
     results2 = pd.DataFrame([[rate_f["pd"],rate_f["pi"],rate_f["ei"],rate_f["ed"],rate_f["ac"],rate_f["rc"], 
                         rate_f["ec"],resurf_cm_yr,sil_mag_S, thick_C,f_remobilised,f_S2,f_pl2mo,f_sq,f_deep,M_mass]])
-    results = results.append(results2, ignore_index=True)
+    results = pd.concat([results, results2], ignore_index=True)
     results2 = pd.DataFrame([["time step","time (Myr)","[S] mantle",
                          "d34S M","d34S F","d34S SS","d34S S","d34S DM","d34S og","d34S iS",
                          "d33S M","d33S F","d33S SS", "d33S S","d33S DM","d33S og","d33S iS",
@@ -848,7 +848,7 @@ def iso_evo_simple(t_step_Myr,end_time_Myr,nr_step,nr_tol,DM_mass_f,DM_mass_f_si
                          "R36 M", "R36 F", "R36 SS","R36 S","R36 DM","R36 og","R36 iS",
                          "a33_bu", "a34_bu", "a36_bu",
                          "a33_escape-burial", "a34_escape-burial", "a36_escape-burial"]])
-    results = results.append(results2, ignore_index=True)
+    results = pd.concat([results, results2], ignore_index=True)
     results2 = pd.DataFrame([[n,t_s,S_conc_M,
                          M_34d,"","",S_34d,"","","",
                          M_33d,"","",S_33d,"","","",
@@ -862,8 +862,8 @@ def iso_evo_simple(t_step_Myr,end_time_Myr,nr_step,nr_tol,DM_mass_f,DM_mass_f_si
                          M_33R, "", "", S_33R, "","","",
                          M_34R, "", "", S_34R, "","","",
                          M_36R, "", "", S_36R, "","","",
-                         "","","","","","","","",""]])         
-    results = results.append(results2, ignore_index=True)
+                         "","","","","","","","",""]])   
+    results = pd.concat([results, results2], ignore_index=True)      
     results.to_csv('time_evolution.csv', index=False, header=False)
 
     for n in range(1,end,1): 
@@ -911,7 +911,7 @@ def iso_evo_simple(t_step_Myr,end_time_Myr,nr_step,nr_tol,DM_mass_f,DM_mass_f_si
                          M_34R, "", "", S_34R,"","",iS_34R,
                          M_36R, "", "", S_36R,"","",iS_36R,
                          "","","",a33_gr,a34_gr,a36_gr]]) 
-        results = results.append(results2, ignore_index=True)
+        results = pd.concat([results, results2], ignore_index=True)
         if(n % 1000==0):
             results.to_csv('time_evolution.csv', index=False, header=False)
         if(n==(end-1.)):
@@ -945,13 +945,13 @@ def calc_atm(profile,F_33R,F_34R,F_36R):
     # set up results table
     results = pd.DataFrame([["F_33R", "F_34R", "F_36R","33a_vp","34a_vp","36a_vp"]])
     results2 = pd.DataFrame([[F_33R, F_34R, F_36R,a33_vp,a34_vp,a36_vp]])
-    results = results.append(results2, ignore_index=True)
+    results = pd.concat([results, results2], ignore_index=True)
     results2 = pd.DataFrame([["Altitude (km)", "T (K)", "33a","34a","36a","33R","34R","36R",
                          "d33S","d34S","d36S","D33S","D36S"]])
-    results = results.append(results2, ignore_index=True)
+    results = pd.concat([results, results2], ignore_index=True)
     results2 = pd.DataFrame([[profile.loc[0,"H"],profile.loc[0,"T"],"","","",A0_33R,A0_34R,A0_36R,
                           A0_33d,A0_34d,A0_36d,A0_33D, A0_36D]])
-    results = results.append(results2, ignore_index=True)
+    results = pd.concat([results, results2], ignore_index=True)
     results.to_csv('atmosphere.csv', index=False, header=False)
 
     for n in range(1,end,1): 
@@ -973,7 +973,7 @@ def calc_atm(profile,F_33R,F_34R,F_36R):
         A2_33D, A2_36D = MIF(A2_33R,A2_34R,A2_36R)
         results2 = pd.DataFrame([[profile.loc[n,"H"],profile.loc[n,"T"],a33,a34,a36,A2_33R,A2_34R,A2_36R,
                           A2_33d,A2_34d,A2_36d,A2_33D, A2_36D]])
-        results = results.append(results2, ignore_index=True)
+        results = pd.concat([results, results2], ignore_index=True)
         results.to_csv('atmosphere.csv', index=False, header=False)
     
 ### range of fractionation factors at a single step ###
@@ -984,10 +984,10 @@ def range_frac_fac_ss():
                          "a36_vp","a36_pd","a36_hg","a36_sl"]])
     results1 = pd.DataFrame([[a33_vp,a33_pd,a33_hg,a33_sl,a34_vp,a34_pd,a34_hg,a34_sl,
                          a36_vp,a36_pd,a36_hg,a36_sl]])
-    results = results.append(results1, ignore_index=True)
+    results = pd.concat([results, results1], ignore_index=True)
     results1 = pd.DataFrame([["x_sn","x_pd","x_hg","a33_bu","a34_bu","a36_bu","a33_sb","a34_sb","a36_sb",
                          "D33_bu","D34_bu","D36_bu","D33_sb","D34_sb","D36_sb"]])
-    results = results.append(results1, ignore_index=True)
+    results = pd.concat([results, results1], ignore_index=True)
 
     for n in range(0,100,1):
         x_sn = n/100.
@@ -1004,7 +1004,7 @@ def range_frac_fac_ss():
             D33_sb, D34_sb, D36_sb = (1.-a33_sb)*1000.,(1.-a34_sb)*1000.,(1.-a36_sb)*1000.
             results1 = pd.DataFrame([[x_sn,x_pd,x_hg,a33_bu,a34_bu,a36_bu,a33_sb,a34_sb,a36_sb,
                                  D33_bu,D34_bu,D36_bu,D33_sb,D34_sb,D36_sb]])
-            results = results.append(results1, ignore_index=True)
+            results = pd.concat([results, results1], ignore_index=True)
             results.to_csv('a_at_single_step.csv', index=False, header=False)  
             
 ### range of fractionation factors for various proportions of space to burial ###
@@ -1015,9 +1015,9 @@ def range_frac_fac_s2b(x_hg):
                          "a36_vp","a36_pd","a36_hg","a36_sl","x_hg"]])
     results1 = pd.DataFrame([[a33_vp,a33_pd,a33_hg,a33_sl,a34_vp,a34_pd,a34_hg,a34_sl,
                          a36_vp,a36_pd,a36_hg,a36_sl,x_hg]])
-    results = results.append(results1, ignore_index=True)
+    results = pd.concat([results, results1], ignore_index=True)
     results1 = pd.DataFrame([["x_sl","x_bu","x_sn","x_pd","x_hg","a33_sb","a34_sb","a36_sb","D33_sb","D34_sb","D36_sb"]])
-    results = results.append(results1, ignore_index=True)
+    results = pd.concat([results, results1], ignore_index=True)
 
     for n in range(0,80,1):
         x_sn = n/100.
@@ -1047,7 +1047,7 @@ def range_frac_fac_s2b(x_hg):
             D33_sb_, D34_sb_, D36_sb_ = (1.-a33_sb_)*1000.,(1.-a34_sb_)*1000.,(1.-a36_sb_)*1000.
             results1 = pd.DataFrame([[x_sl,x_bu,x_sn,x_pd,x_hg,a33_sb_,a34_sb_,a36_sb_,
                                  D33_sb_,D34_sb_,D36_sb_]])
-            results = results.append(results1, ignore_index=True)
+            results = pd.concat([results, results1], ignore_index=True)
             results.to_csv('a_prop_sl_bu.csv', index=False, header=False)
             
 #################################
@@ -1084,11 +1084,11 @@ def calc_iso_variable(d_i,step_size): # isotopic composition for variable S frac
     # set up results table
     results = pd.DataFrame([["Alpha core formation","Initial Io d34S"]])
     results1 = pd.DataFrame([[a34_cf,d_i]])
-    results = results.append(results1, ignore_index=True)
+    results = pd.concat([results, results1], ignore_index=True)
     results1 = pd.DataFrame([["Fraction of S in mantle","Fraction of S in core","R34 mantle","d34S mantle","R34 core","d34S core"]])
-    results = results.append(results1, ignore_index=True)
+    results = pd.concat([results, results1], ignore_index=True)
     results1 = pd.DataFrame([[0,1,"","",d2R(d_i,34,VCDT),d_i]])
-    results = results.append(results1, ignore_index=True)
+    results = pd.concat([results, results1], ignore_index=True)
     results.to_csv('iso_variable_core_formation.csv', index=False, header=False)
 
     start = 1
@@ -1101,5 +1101,5 @@ def calc_iso_variable(d_i,step_size): # isotopic composition for variable S frac
         R_m, R_c = ratio_core2mantle(x,a34_cf,d_i,_TS_T)
     
         results1 = pd.DataFrame([[x,(1.-x),R_m,R2d(R_m,34,VCDT),R_c,R2d(R_c,34,VCDT)]])
-        results = results.append(results1, ignore_index=True)
+        results = pd.concat([results, results1], ignore_index=True)
         results.to_csv('iso_variable_core_formation.csv', index=False, header=False)
